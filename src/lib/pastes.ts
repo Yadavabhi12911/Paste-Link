@@ -35,7 +35,7 @@ export async function getPasteReadOnly(
 ): Promise<PasteRow | null> {
   const sql = await ensureSchemaAndGetDb();
   const nowIso = new Date(nowMs).toISOString();
-  const rows = await sql<PasteRow>(
+  const rows = await sql(
     `SELECT id, content, created_at, expires_at, max_views, views_used
      FROM pastes
      WHERE id = $1
@@ -43,7 +43,7 @@ export async function getPasteReadOnly(
        AND (max_views IS NULL OR views_used < max_views)`,
     [id, nowIso]
   );
-  const row = rows?.[0] ?? null;
+  const row = (rows as PasteRow[])?.[0] ?? null;
   return row;
 }
 
@@ -58,7 +58,7 @@ export async function getPasteAndIncrementView(
 ): Promise<PasteRow | null> {
   const sql = await ensureSchemaAndGetDb();
   const nowIso = new Date(nowMs).toISOString();
-  const rows = await sql<PasteRow>(
+  const rows = await sql(
     `UPDATE pastes
      SET views_used = views_used + 1
      WHERE id = $1
@@ -67,7 +67,7 @@ export async function getPasteAndIncrementView(
      RETURNING id, content, created_at, expires_at, max_views, views_used`,
     [id, nowIso]
   );
-  const row = rows?.[0] ?? null;
+  const row = (rows as PasteRow[])?.[0] ?? null;
   return row;
 }
 
