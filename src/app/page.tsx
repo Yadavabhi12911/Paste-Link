@@ -102,7 +102,7 @@ export default function Home() {
         </div>
         <div className="form-row-inline">
           <div>
-            <label htmlFor="ttl_seconds">TTL (seconds)</label>
+            <label htmlFor="ttl_seconds">Auto-delete after (seconds)</label>
             <input
               id="ttl_seconds"
               type="number"
@@ -113,7 +113,7 @@ export default function Home() {
             />
           </div>
           <div>
-            <label htmlFor="max_views">Max views</label>
+            <label htmlFor="max_views">Delete after views</label>
             <input
               id="max_views"
               type="number"
