@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
-import { getPasteReadOnly } from "@/lib/pastes";
+import { getPasteAndIncrementView } from "@/lib/pastes";
 import { getCurrentTimeMs } from "@/lib/time";
 
 interface PageProps {
@@ -12,7 +12,7 @@ export default async function PastePage({ params }: PageProps) {
   const { id } = await params;
   const headersList = await headers();
   const nowMs = getCurrentTimeMs(headersList);
-  const paste = await getPasteReadOnly(id, nowMs);
+  const paste = await getPasteAndIncrementView(id, nowMs);
   if (!paste) {
     notFound();
   }
